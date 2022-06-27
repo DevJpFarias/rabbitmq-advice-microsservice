@@ -1,0 +1,24 @@
+{
+  "name": "advice-generator",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "ts-node src/index.ts"
+  },
+  "dependencies": {
+    "amqplib": "^0.10.0",
+    "axios": "^0.27.2",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "fs": "^0.0.1-security",
+    "node-cron": "^2.0.3"
+  },
+  "devDependencies": {
+    "@types/amqplib": "^0.8.2",
+    "@types/node": "^18.0.0",
+    "@types/node-cron": "^3.0.1",
+    "ts-node": "^10.8.1",
+    "typescript": "^4.7.4"
+  }
+}
