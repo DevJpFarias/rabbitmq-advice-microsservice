@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { config } from 'dotenv'
 import cron from 'node-cron'
+import { createMessageChannel } from './messages/messageChannel';
 
 config()
 
@@ -10,18 +11,27 @@ config()
 
 //cron.schedule('10 * * * * *', async () ={...}, {scheduled: true, timezone: "America/Sao_Paulo" }) = Roda toda vez que o segundo da hora for 10 (9:10, 10:10. ...) do horário de São Paulo
 
-cron.schedule('*/10 * * * * *', async () => {
+cron.schedule('* * * * *', async () => {
   const readAdvice = async (): Promise<string> => {
     const result = await axios.get(process.env.ADVICE_API)
     const data = await result.data
     const slip = await data.slip
     const advice = await slip.advice
-    console.log(advice)
     return advice
   }
 
-  readAdvice()
+  const generateAdvices = async () => {
+    const messageChannel = await createMessageChannel()
+
+    const advice = await readAdvice()
+
+    const adviceJson = JSON.stringify(advice)
+    messageChannel.sendToQueue(process.env.QUEUE_NAME, Buffer.from(adviceJson))
+    console.log('Advice sent to queue')
+  }
+
+  generateAdvices()
 }, {
   scheduled: true,
   timezone: "America/Sao_Paulo"
-});
+})
