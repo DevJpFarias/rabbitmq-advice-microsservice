@@ -12,3 +12,11 @@ Used:<br>
 <li>Socket.io</li>
 <li>Typeorm</li>
 </ul>
+
+Commands:
+
+Both: docker-compose up -d
+
+Advice-generator: npm run start
+
+Advice-api: npm run dev
